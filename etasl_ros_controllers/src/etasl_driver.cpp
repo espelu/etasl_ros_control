@@ -154,9 +154,9 @@ int EtaslDriver::setInput(const TwistMap& tmap)
   return 0;
 }
 
-int EtaslDriver::setInput(const WrenchMap& tmap)
+int EtaslDriver::setInput(const WrenchMap& wmap)
 {
-  for (auto item : tmap)
+  for (auto item : wmap)
   {
     auto v = ctx_->getInputChannel<Wrench>(item.first);
     if (v)
@@ -368,6 +368,18 @@ void EtaslDriver::getOutput(TwistMap& tmap)
     }
   }
 }
+  
+void EtaslDriver::getOutput(WrenchMap& wmap)
+{
+  for (Context::OutputVarMap::iterator it = ctx_->output_vars.begin(); it != ctx_->output_vars.end(); it++)
+  {
+    Expression<Wrench>::Ptr expr = boost::dynamic_pointer_cast<Expression<Wrench>>(it->second);
+    if (expr)
+    {
+      wmap[it->first] = expr->value();
+    }
+  }
+}  
 
 int EtaslDriver::initialize(const DoubleMap& initialval, double initialization_time, double sample_time,
                             double convergence_crit, DoubleMap& convergedval)
