@@ -178,7 +178,7 @@ bool EtaslController::configureInput(ros::NodeHandle& node_handle)
       }
       else if (input_types_[i] == "Wrench")
       {
-	      ROS_INFO_STREAM("EtaslController: Adding input channel \"" << input_names_[i] << "\" of type \"Twist\"");
+	      ROS_INFO_STREAM("EtaslController: Adding input channel \"" << input_names_[i] << "\" of type \"Wrench\"");
 	      wrench_input_names_.push_back(input_names_[i]);
 	      auto input_buffer = boost::make_shared<realtime_tools::RealtimeBuffer<geometry_msgs::Wrench>>();
 	      boost::function<void(const geometry_msgs::WrenchConstPtr&)> callback =
@@ -324,6 +324,14 @@ bool EtaslController::configureOutput(ros::NodeHandle& node_handle)
             node_handle, output_names_[i], 4));
         ++n_twist_outputs_;
       }
+      else if (output_types_[i] == "Wrench")
+      {
+        ROS_INFO_STREAM("EtaslController: Adding output channel \"" << output_names_[i] << "\" of type \"Wrench\"");
+        wrench_output_names_.push_back(output_names_[i]);
+        wrench_realtime_pubs_.push_back(boost::make_shared<realtime_tools::RealtimePublisher<geometry_msgs::Wrench>>(
+            node_handle, output_names_[i], 4));
+        ++n_wrnch_outputs_;
+      }    
       else
       {
         ROS_ERROR_STREAM("EtaslController: Output channel type \"" << output_types_[i] << "\" is not supported");
@@ -404,6 +412,20 @@ void EtaslController::setOutput()
         Twist twist = twist_output_map_["global." + twist_output_names_[i]];
         tf::twistKDLToMsg(twist, twist_realtime_pubs_[i]->msg_);
         twist_realtime_pubs_[i]->unlockAndPublish();
+      }
+    }
+  }
+  
+  if (n_wrench_outputs_ > 0)
+  {
+    etasl_->getOutput(wrench_output_map_);
+    for (size_t i = 0; i < n_wrench_outputs_; i++)
+    {
+      if (wrench_realtime_pubs_[i]->trylock())
+      {
+        Wrench wrench = wrench_output_map_["global." + wrench_output_names_[i]];
+        tf::wrenchKDLToMsg(wrench, wrench_realtime_pubs_[i]->msg_);
+        wrench_realtime_pubs_[i]->unlockAndPublish();
       }
     }
   }
