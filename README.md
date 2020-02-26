@@ -39,7 +39,7 @@ By default we will assume you are building on the latest branch, we currently us
 Pull down the required repositories and build from within the root directory of your catkin workspace:
 ```bash
 wstool init src
-wstool merge -t src https://raw.githubusercontent.com/tingelst/etasl_ros_control/master/etasl_ros_control.rosinstall
+wstool merge -t src https://raw.githubusercontent.com/espelu/etasl_ros_control/master/etasl_ros_control.rosinstall
 wstool update -t src
 rosdep install -y --from-paths src --ignore-src --rosdistro ${ROS_DISTRO}
 catkin_init_workspace src
