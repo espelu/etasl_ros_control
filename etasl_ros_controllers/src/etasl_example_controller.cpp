@@ -176,6 +176,17 @@ bool EtaslController::configureInput(ros::NodeHandle& node_handle)
         twist_input_buffers_.push_back(input_buffer);
         ++n_twist_inputs_;
       }
+      else if (input_types_[i] == "Wrench")
+      {
+	      ROS_INFO_STREAM("EtaslController: Adding input channel \"" << input_names_[i] << "\" of type \"Wrench\"");
+	      wrench_input_names_.push_back(input_names_[i]);
+	      auto input_buffer = boost::make_shared<realtime_tools::RealtimeBuffer<geometry_msgs::Wrench>>();
+	      boost::function<void(const geometry_msgs::WrenchConstPtr&)> callback =
+	          [input_buffer](const geometry_msgs::WrenchConstPtr& msg) { input_buffer->writeFromNonRT(*msg); };
+	      subs_.push_back(node_handle.subscribe<geometry_msgs::Wrench>(input_names_[i], 1, callback));
+	      wrench_input_buffers_.push_back(input_buffer);
+	      ++n_wrench_inputs_;
+      }
       else
       {
         ROS_ERROR_STREAM("EtaslController: Input channel type \"" << input_types_[i] << "\" is not supported");
@@ -245,6 +256,16 @@ void EtaslController::getInput()
     }
     etasl_->setInput(twist_input_map_);
   }
+  if (n_wrench_inputs_ > 0)
+  {
+    for (size_t i = 0; i < n_wrench_inputs_; i++)
+    {
+      Wrench wrench;
+      tf::wrenchMsgToKDL(*wrench_input_buffers_[i]->readFromRT(), wrench);
+      wrench_input_map_["global." + wrench_input_names_[i]] = wrench;
+    }
+    etasl_->setInput(wrench_input_map_);
+  }
 }
 
 bool EtaslController::configureOutput(ros::NodeHandle& node_handle)
@@ -303,6 +324,14 @@ bool EtaslController::configureOutput(ros::NodeHandle& node_handle)
             node_handle, output_names_[i], 4));
         ++n_twist_outputs_;
       }
+      else if (output_types_[i] == "Wrench")
+      {
+        ROS_INFO_STREAM("EtaslController: Adding output channel \"" << output_names_[i] << "\" of type \"Wrench\"");
+        wrench_output_names_.push_back(output_names_[i]);
+        wrench_realtime_pubs_.push_back(boost::make_shared<realtime_tools::RealtimePublisher<geometry_msgs::Wrench>>(
+            node_handle, output_names_[i], 4));
+        ++n_wrench_outputs_;
+      }  	    
       else
       {
         ROS_ERROR_STREAM("EtaslController: Output channel type \"" << output_types_[i] << "\" is not supported");
@@ -386,6 +415,20 @@ void EtaslController::setOutput()
       }
     }
   }
+	
+  if (n_wrench_outputs_ > 0)
+  {
+    etasl_->getOutput(wrench_output_map_);
+    for (size_t i = 0; i < n_wrench_outputs_; i++)
+    {
+      if (wrench_realtime_pubs_[i]->trylock())
+      {
+        Wrench wrench = wrench_output_map_["global." + wrench_output_names_[i]];
+        tf::wrenchKDLToMsg(wrench, wrench_realtime_pubs_[i]->msg_);
+        wrench_realtime_pubs_[i]->unlockAndPublish();
+      }
+    }
+  }		
 }
 
 }  // namespace etasl_ros_controllers
