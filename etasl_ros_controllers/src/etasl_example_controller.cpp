@@ -330,8 +330,10 @@ bool EtaslController::configureOutput(ros::NodeHandle& node_handle)
         wrench_output_names_.push_back(output_names_[i]);
         wrench_realtime_pubs_.push_back(boost::make_shared<realtime_tools::RealtimePublisher<geometry_msgs::Wrench>>(
             node_handle, output_names_[i], 4));
+
         ++n_wrench_outputs_;
       }  	    
+
       else
       {
         ROS_ERROR_STREAM("EtaslController: Output channel type \"" << output_types_[i] << "\" is not supported");
@@ -415,7 +417,7 @@ void EtaslController::setOutput()
       }
     }
   }
-	
+
   if (n_wrench_outputs_ > 0)
   {
     etasl_->getOutput(wrench_output_map_);
@@ -428,8 +430,7 @@ void EtaslController::setOutput()
         wrench_realtime_pubs_[i]->unlockAndPublish();
       }
     }
-  }		
-}
+  }
 
 }  // namespace etasl_ros_controllers
 
