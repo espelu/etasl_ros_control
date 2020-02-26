@@ -131,6 +131,11 @@ private:
   size_t n_twist_outputs_{};
   std::vector<boost::shared_ptr<realtime_tools::RealtimePublisher<geometry_msgs::Twist>>> twist_realtime_pubs_;
 
+  std::vector<std::string>wrench_output_names_;
+  WrenchMap wrench_output_map_;
+  size_t n_wrench_outputs_{};
+  std::vector<boost::shared_ptr<realtime_tools::RealtimePublisher<geometry_msgs::Wrench>>> wrench_realtime_pubs_;
+
   std::string task_specification_;
   boost::shared_ptr<EtaslDriver> etasl_;
 };
