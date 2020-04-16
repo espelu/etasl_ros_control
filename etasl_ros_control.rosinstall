@@ -50,3 +50,30 @@
     local-name: kuka_experimental
     uri: https://github.com/ros-industrial/kuka_experimental.git
     version: indigo-devel
+- git: 
+    local-name: netft_utils
+    uri: https://github.com/UTNuclearRoboticsPublic/netft_utils.git
+    version: master
+- git:
+    local-name: robotiq
+    uri: https://github.com/ros-industrial/robotiq.git
+    version: master
+- git:
+    local-name: kuka_lab_setup
+    uri: https://github.com/daglofthus/kuka_lab_setup.git
+    version: master
+- git: 
+    local-name: forcesensor
+    uri: https://github.com/daglofthus/forcesensor.git
+    version: master
+- git: 
+    local-name: workspace
+    uri: https://github.com/daglofthus/workspace.git
+    version: master
+- git:
+    local-name: geometric3
+    uri: https://github.com/daglofthus/geometric3.git
+    version: master
+    
+                    
+
