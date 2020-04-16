@@ -1,0 +1,168 @@
+#Publish all joint states
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+  extra_joints:
+    - name: "finger_joint"
+      position: 0.6
+
+# Joint trajectory controller
+position_trajectory_controller:
+  type: "position_controllers/JointTrajectoryController"
+  joints:
+    - joint_a1
+    - joint_a2
+    - joint_a3
+    - joint_a4
+    - joint_a5
+    - joint_a6
+  state_publish_rate: 50 # Defaults to 50
+  action_monitor_rate: 20 # Defaults to 20
+
+#   # eTaSl controller 1
+# etasl_controller:
+#   type: "etasl_ros_controllers/EtaslController"
+#   joints:
+#     - joint_a1
+#     - joint_a2
+#     - joint_a3
+#     - joint_a4
+#     - joint_a5
+#     - joint_a6
+#   input:
+#     names:
+#       - "tgt_x"
+#       - "tgt_y"
+#       - "tgt_z"
+#     types:
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#   output:
+#     names:
+#       - "error_x"
+#       - "error_y"
+#       - "error_z"
+#       - "laser"
+#     types:
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#       - "Vector"
+#   task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka.lua"
+
+# eTaSL controller home position.
+etasl_controller_2:
+  type: "etasl_ros_controllers/EtaslController"
+  joints:
+    - joint_a1
+    - joint_a2
+    - joint_a3
+    - joint_a4
+    - joint_a5
+    - joint_a6
+  task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka_2.lua"
+
+# eTaSL controller calibration routine
+
+etasl_controller_calib:
+  type: "etasl_ros_controllers/EtaslController"
+  joints:
+    - joint_a1
+    - joint_a2
+    - joint_a3
+    - joint_a4
+    - joint_a5
+    - joint_a6
+    # input:
+    #   names:
+    #     - "netft_data"
+    #   types:
+    #     - "Vector"
+    # output:
+    #   names:
+    #     - "netft_data_bias"
+    #   types:
+    #     - "Vector"
+  task_specification: "$(find etasl_ros_control_examples)/scripts/calib.lua"
+
+#Turn on gravity compansation in smach script
+
+# Test with force_control
+# eTaSl force controller
+etasl_controller_force:
+  type: "etasl_ros_controllers/EtaslController"
+  joints:
+    - joint_a1
+    - joint_a2
+    - joint_a3
+    - joint_a4
+    - joint_a5
+    - joint_a6
+  input:
+    names:
+      - "meas_fx"
+      - "meas_fy"
+      - "meas_fz"   
+    types:
+      - "Scalar"
+      - "Scalar"
+      - "Scalar"
+  output:
+    names:      
+      - "error_fx"
+      - "error_fy"
+      - "error_fz"
+    types:
+      - "Scalar"
+      - "Scalar"
+      - "Scalar"
+  task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka_force.lua"
+
+
+# eTaSL admittance force and torque controller. 
+# TODO: Use the wrench from topic "netft_data" as input. Make pitch, tilt yaw work.
+
+# etasl_controller:
+#   type: "etasl_ros_controllers/EtaslController"
+#   joints:
+#     - joint_a1
+#     - joint_a2
+#     - joint_a3
+#     - joint_a4
+#     - joint_a5
+#     - joint_a6
+#   input:
+#     names:
+#       - "meas_fx"
+#       - "meas_fy"
+#       - "meas_fz"
+#       - "meas_tx"
+#       - "meas_ty"
+#       - "meas_tz"
+#     types:
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#   output:
+#     names:      
+#       - "error_fx"
+#       - "error_fy"
+#       - "error_fz"
+#       - "error_tx"
+#       - "error_ty"
+#       - "error_tz"
+#     types:
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#   task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka_ft.lua"
+
+
+

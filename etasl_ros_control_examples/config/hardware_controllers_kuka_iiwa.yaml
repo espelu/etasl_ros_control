@@ -1,0 +1,37 @@
+#Publish all joint states
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+# eTaSl example controller
+etasl_controller:
+  type: "etasl_ros_controllers/EtaslController"
+  joints:
+    - iiwa_joint_1
+    - iiwa_joint_2
+    - iiwa_joint_3
+    - iiwa_joint_4
+    - iiwa_joint_5
+    - iiwa_joint_6
+    - iiwa_joint_7
+  input:
+    names:
+      - "tgt_x"
+      - "tgt_y"
+      - "tgt_z"
+    types:
+      - "Scalar"
+      - "Scalar"
+      - "Scalar"
+  output:
+    names:
+      - "error_x"
+      - "error_y"
+      - "error_z"
+      - "laser"
+    types:
+      - "Scalar"
+      - "Scalar"
+      - "Scalar"
+      - "Vector"
+  task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka_iiwa.lua"

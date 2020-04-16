@@ -1,0 +1,35 @@
+  
+#Publish all joint states
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+# eTaSl force controller
+etasl_controller_force:
+  type: "etasl_ros_controllers/EtaslController"
+  joints:
+    - joint_a1
+    - joint_a2
+    - joint_a3
+    - joint_a4
+    - joint_a5
+    - joint_a6
+  input:
+    names:
+      - "meas_fx"
+      - "meas_fy"
+      - "meas_fz"   
+    types:
+      - "Scalar"
+      - "Scalar"
+      - "Scalar"
+  output:
+    names:      
+      - "error_fx"
+      - "error_fy"
+      - "error_fz"
+    types:
+      - "Scalar"
+      - "Scalar"
+      - "Scalar"
+  task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka_force.lua"
