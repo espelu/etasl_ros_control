@@ -1,6 +1,5 @@
 # etasl_ros_control
 
-FINALLY??
 
 This project integrates **eTaSL** with **ROS Control**.
 
