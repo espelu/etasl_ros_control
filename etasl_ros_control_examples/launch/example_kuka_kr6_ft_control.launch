@@ -11,7 +11,7 @@
     <node name="kuka_hardware_interface" pkg="kuka_rsi_hw_interface" type="kuka_hardware_interface_node" respawn="false" output="screen" required="true"/>
 
     <rosparam file="$(find etasl_ros_control_examples)/config/hardware_controllers_kuka_ft.yaml" command="load" subst_value="true"/>
-    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="etasl_controller joint_state_controller" required="true"/>
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="etasl_controller_ft joint_state_controller" required="true"/>
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 

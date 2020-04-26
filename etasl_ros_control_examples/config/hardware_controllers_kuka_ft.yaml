@@ -5,7 +5,7 @@ joint_state_controller:
   publish_rate: 50
 
 # eTaSl example controller
-etasl_controller:
+etasl_controller_ft:
   type: "etasl_ros_controllers/EtaslController"
   joints:
     - joint_a1

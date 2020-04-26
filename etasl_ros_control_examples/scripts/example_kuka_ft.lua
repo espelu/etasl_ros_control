@@ -11,6 +11,7 @@ u:addTransform("ee", "tool0", "base_link")
 local r = u:getExpressions(ctx)
 
 -- The transformation of the robot mounting plate frame with respect to the robot base frame
+-- Need to add gripper
 robot_ee = r.ee
 
 -- The name of the robot joints
@@ -25,12 +26,6 @@ robot_joints = {
 
 netft_data = ctx:createInputChannelWrench("netft_data")
 
--- meas_fx = ctx:createInputChannelScalar("meas_fx")
--- meas_fy = ctx:createInputChannelScalar("meas_fy")
--- meas_fz = ctx:createInputChannelScalar("meas_fz")
--- meas_tx = ctx:createInputChannelScalar("meas_tx")
--- meas_ty = ctx:createInputChannelScalar("meas_ty")
--- meas_tz = ctx:createInputChannelScalar("meas_tz")
 
 -- netft_data[1] is the same as coord_x(force(netft_data)))??
 -- Force constraints
