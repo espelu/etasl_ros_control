@@ -369,6 +369,18 @@ void EtaslDriver::getOutput(TwistMap& tmap)
   }
 }
 
+void EtaslDriver::getOutput(WrenchMap& tmap)
+{
+  for (Context::OutputVarMap::iterator it = ctx_->output_vars.begin(); it != ctx_->output_vars.end(); it++)
+  {
+    Expression<Wrench>::Ptr expr = boost::dynamic_pointer_cast<Expression<Wrench>>(it->second);
+    if (expr)
+    {
+      tmap[it->first] = expr->value();
+    }
+  }
+}  
+  
 int EtaslDriver::initialize(const DoubleMap& initialval, double initialization_time, double sample_time,
                             double convergence_crit, DoubleMap& convergedval)
 {
