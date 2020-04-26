@@ -19,37 +19,37 @@ position_trajectory_controller:
   state_publish_rate: 50 # Defaults to 50
   action_monitor_rate: 20 # Defaults to 20
 
-#   # eTaSl controller 1
-# etasl_controller:
-#   type: "etasl_ros_controllers/EtaslController"
-#   joints:
-#     - joint_a1
-#     - joint_a2
-#     - joint_a3
-#     - joint_a4
-#     - joint_a5
-#     - joint_a6
-#   input:
-#     names:
-#       - "tgt_x"
-#       - "tgt_y"
-#       - "tgt_z"
-#     types:
-#       - "Scalar"
-#       - "Scalar"
-#       - "Scalar"
-#   output:
-#     names:
-#       - "error_x"
-#       - "error_y"
-#       - "error_z"
-#       - "laser"
-#     types:
-#       - "Scalar"
-#       - "Scalar"
-#       - "Scalar"
-#       - "Vector"
-#   task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka.lua"
+# eTaSl controller etching
+etasl_controller:
+  type: "etasl_ros_controllers/EtaslController"
+  joints:
+    - joint_a1
+    - joint_a2
+    - joint_a3
+    - joint_a4
+    - joint_a5
+    - joint_a6
+  input:
+    names:
+      - "tgt_x"
+      - "tgt_y"
+      - "tgt_z"
+    types:
+      - "Scalar"
+      - "Scalar"
+      - "Scalar"
+  output:
+    names:
+      - "error_x"
+      - "error_y"
+      - "error_z"
+      - "laser"
+    types:
+      - "Scalar"
+      - "Scalar"
+      - "Scalar"
+      - "Vector"
+  task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka.lua"
 
 # eTaSL controller home position.
 etasl_controller_2:
@@ -90,6 +90,7 @@ etasl_controller_calib:
 
 # Test with force_control
 # eTaSl force controller
+#Change with full ft-controller later. See down below
 etasl_controller_force:
   type: "etasl_ros_controllers/EtaslController"
   joints:
@@ -164,5 +165,37 @@ etasl_controller_force:
 #       - "Scalar"
 #   task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka_ft.lua"
 
-
+# An experiment of how the robot behaves from forces when following a line.
+etasl_controller_ft_line:
+  type: "etasl_ros_controllers/EtaslController"
+  joints:
+    - joint_a1
+    - joint_a2
+    - joint_a3
+    - joint_a4
+    - joint_a5
+    - joint_a6
+#   input:
+#     names:
+#       - "tgt_x"
+#       - "tgt_y"
+#       - "tgt_z"
+#       - "netft_data"
+#     types:
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#       - "Vector"
+#   output:
+#     names:
+#       - "error_x"
+#       - "error_y"
+#       - "error_z"
+#       - "laser"
+#     types:
+#       - "Scalar"
+#       - "Scalar"
+#       - "Scalar"
+#       - "Vector"
+#   task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka.lua"
 

@@ -5,11 +5,11 @@ import smach
 import smach_ros
 
 
+from subprocess import call
 from controller_manager_msgs.srv import SwitchController
 from controller_manager_msgs.srv import ListControllers
 from controller_manager_msgs.srv import SwitchControllerResponse
 from controller_manager_msgs.srv import SwitchControllerRequest
-
 
 def sane_controller_switching(desired_controller, timeout=None):
     """Function to switch hw controller when there can be resource
@@ -49,23 +49,6 @@ def sane_controller_switching(desired_controller, timeout=None):
               SwitchControllerRequest.STRICT)
 
 
-# # Define the laser "etching" operational mode
-# class Etch(smach.State):
-#     def __init__(self):
-#         smach.State.__init__(self, outcomes=["single_etching_complete",
-#                                              "10_etchings_complete"])
-#         self.counter = 0
-
-#     def execute(self, userdata):
-#         rospy.loginfo("------------Executing etch operation.")
-#         sane_controller_switching("etasl_controller")
-#         rospy.sleep(20.)  # Sleep for 20 seconds.
-#         # Should be handled with monitors
-#         self.counter += 1
-#         if self.counter > 10:
-#             return "10_etchings_complete"
-#         else:
-#             return "single_etching_complete"
 
 
 # Define the "Stay at home" state. Staying still while the paper to be etched
@@ -88,6 +71,7 @@ class Calibration(smach.State):
         rospy.loginfo("---------Calibrating in pos z-direction.")
         sane_controller_switching("etasl_controller_calib")
         rospy.sleep(10.) #Sleep for 10 seconds
+        call(["rosservice", "call" "/gravity_comp" "true" "20" "10"]) ###########################FUNKER DETTE?
         #zero out bias in fx + fy direction + t_xyz
 
         #rotate "c5" to 0 degrees.
@@ -105,23 +89,41 @@ class Force_control(smach.State):
         rospy.sleep(20.) #Sleep for 20 seconds
         return "force_control_complete"         
 
+# Define the laser "etching" operational mode
+class Etch(smach.State):
+    def __init__(self):
+        smach.State.__init__(self, outcomes=["single_etching_complete",
+                                             "10_etchings_complete"])
+        self.counter = 0
+
+    def execute(self, userdata):
+        rospy.loginfo("------------Executing etch operation.")
+        sane_controller_switching("etasl_controller")
+        rospy.sleep(20.)  # Sleep for 20 seconds.
+        # Should be handled with monitors
+        self.counter += 1
+        if self.counter > 10:
+            return "10_etchings_complete"
+        else:
+            return "single_etching_complete"
+
 
 if __name__ == "__main__":
-    rospy.init_node("smach_example")
+    rospy.init_node("smach_ft")
 
     # Create a SMACH state machine
     sm = smach.StateMachine(outcomes=["fully_complete"])
     with sm:
-        # smach.StateMachine.add("Etch", Etch(),
-        #                        transitions={
-        #                            "single_etching_complete": "Home",
-        #                            "10_etchings_complete": "fully_complete"})
         smach.StateMachine.add("Home", Home(),
                                transitions={"wait_complete": "Calibration"})
         smach.StateMachine.add("Calibration", Calibration(), 
-                                transitions={"calibration_z_complete": "Force_control"}) 
+                                transitions={"calibration_z_complete": "Force_control"})                                
         smach.StateMachine.add("Force_control", Force_control(),
-                                transitions={"force_control_complete": "fully_complete"} )                                              
+                                transitions={"force_control_complete": "Etch"} )  
+        smach.StateMachine.add("Etch", Etch(),
+                               transitions={
+                                   "single_etching_complete": "Home",
+                                   "10_etchings_complete": "fully_complete"})                                                                     
     sis = smach_ros.IntrospectionServer('laser_etching', sm, '/SM_ROOT')
     sis.start()
     outcome = sm.execute()

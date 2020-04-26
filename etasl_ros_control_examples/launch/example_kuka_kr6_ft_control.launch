@@ -19,7 +19,7 @@
 
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find industrial_robot_client)/config/robot_state_visualize.rviz" required="true"/>
 
-    <node name="wrench_publisher" pkg="etasl_ros_control_examples" type="wrench_publisher.py" required="true" output="screen"/>
+    <!-- <node name="wrench_publisher" pkg="etasl_ros_control_examples" type="wrench_publisher.py" required="true" output="screen" launch-prefix="xterm -e"/> -->
     <!--node name="netft_node" pkg="netft_utils" type="netft_node" required="true" output="screen"-->
 
 </launch>

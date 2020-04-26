@@ -12,7 +12,7 @@
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="position_trajectory_controller joint_state_controller"/>
 
   <rosparam file="$(find etasl_ros_control_examples)/config/smach_ft.yaml" command="load" subst_value="true"/>
-  <node name="controller_spawner_etasl" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="--stopped etasl_controller_2 etasl_controller_calib etasl_controller_force"/>
+  <node name="controller_spawner_etasl" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="--stopped etasl_controller_2 etasl_controller_calib etasl_controller_force etasl_controller"/>
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
 
@@ -25,4 +25,5 @@
   <node name="target_publisher" pkg="etasl_ros_control_examples" type="target_publisher.py" required="true"/>
   <node name="smach_viz" pkg="smach_viewer" type="smach_viewer.py"/>
   <node name="smach_TEST" pkg="etasl_ros_control_examples" type="smach_ft.py" required="true"/>
+  <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui"/>
 </launch>

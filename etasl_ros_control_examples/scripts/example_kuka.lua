@@ -43,8 +43,10 @@ Constraint{
     context = ctx,
     name = "laserdistance",
     expr = d,
-    target_lower = 0.5,
-    target_upper = 0.9,
+    -- target_lower = 0.5,
+    -- target_upper = 0.9,
+    target_lower = 0.0,
+    target_upper = 0.01,
     K = 4
 }
 

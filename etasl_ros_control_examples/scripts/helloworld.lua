@@ -1,3 +1,5 @@
+-- An example script. Build and run in terminal by go to th correct direction and type "$lua helloworld.lua" 
+
 -- require("context")
 
 -- local r = u:getExpressions(ctx)
@@ -5,7 +7,9 @@
 -- netft_data = ctx:createInputChannelWrench("netft_data")
 
 
-print(netft_data)
+-- print(netft_data[1])
+-- print(coord_x(force(netft_data)))
+
 print("Hello, World")
 
 y=4;
@@ -36,8 +40,10 @@ print(clock)
 -- make a wrech
 wrench = {}
 for i=1,6 do
-    wrench[i] = 2+i
+    wrench[i] = 2*i
 end 
 
 print(wrench)
+print(wrench[1])
+print(wrench[2])
 print(wrench[3])

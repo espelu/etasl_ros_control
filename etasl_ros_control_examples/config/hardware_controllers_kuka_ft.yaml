@@ -16,32 +16,22 @@ etasl_controller:
     - joint_a6
   input:
     names:
-      - "meas_fx"
-      - "meas_fy"
-      - "meas_fz"
-      - "meas_tx"
-      - "meas_ty"
-      - "meas_tz"
+      - "netft_data"
     types:
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
-  output:
-    names:      
-      - "error_fx"
-      - "error_fy"
-      - "error_fz"
-      - "error_tx"
-      - "error_ty"
-      - "error_tz"
-    types:
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
+      - "Wrench"
+  # output:
+  #   names:      
+  #     - "error_fx"
+  #     - "error_fy"
+  #     - "error_fz"
+  #     - "error_tx"
+  #     - "error_ty"
+  #     - "error_tz"
+  #   types:
+  #     - "Scalar"
+  #     - "Scalar"
+  #     - "Scalar"
+  #     - "Scalar"
+  #     - "Scalar"
+  #     - "Scalar"
   task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka_ft.lua"

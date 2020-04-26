@@ -23,9 +23,7 @@ robot_joints = {
     "joint_a6"
 }
 
--- meas_tx = ctx:createInputChannelScalar("msg.wrench.torque.x")
--- meas_ty = ctx:createInputChannelScalar("msg.wrench.torque.y")
--- meas_tz = ctx:createInputChannelScalar("msg.wrench.torque.z")
+-- netft_data = ctx:createInputChannelWrench("netft_data")
 
 meas_tx = ctx:createInputChannelScalar("meas_tx");
 meas_ty = ctx:createInputChannelScalar("meas_ty");
@@ -33,12 +31,12 @@ meas_tz = ctx:createInputChannelScalar("meas_tz");
 
 print(meas_tx)
 
--- Torque constraints - how to rotate?
+-- Torque constraints - how to rotate? rotate_x
 
 Constraint{
     context = ctx,
     name    = "tx_control",
-    model   = coord_x(origin(robot_ee)), --ROLL .Want to rotate about x-axis. rot_x?
+    model   = rotate_x(frame(robot_ee)), --ROLL .Want to rotate about x-axis. rot_x?
     meas    = meas_tx, --measured torque
     target  = 0, --Tdes_ee, 
     priority= 2,
@@ -48,7 +46,7 @@ Constraint{
 Constraint{
     context = ctx,
     name    = "ty_control",
-    model   = coord_y(origin(robot_ee)), --Pitch. Want to rotate about y-axis. rox_y?
+    model   = rotate_y(frame(robot_ee)), --Pitch. Want to rotate about y-axis. rox_y?
     meas    = meas_ty, --measured torque
     target  = 0, --Tdes_ee, 
     priority= 2,
@@ -58,7 +56,7 @@ Constraint{
 Constraint{
     context = ctx,
     name    = "tz_control",
-    model   = coord_z(origin(robot_ee)), --Yaw .Want to rotate about z-axis. rot_z?
+    model   = rotate_z(frame(robot_ee)), --Yaw .Want to rotate about z-axis. rot_z?
     meas    = meas_tz, --measured torque
     target  = 0, --Tdes_ee, 
     priority= 2,

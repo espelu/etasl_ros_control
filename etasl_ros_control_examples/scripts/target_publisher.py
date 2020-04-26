@@ -57,12 +57,15 @@ if __name__ == "__main__":
     points = []
     try:
         while not rospy.is_shutdown():
-            f1 = 1.0
-            f2 = 2.5
+            f1 = 0.1
+            f2 = 0.3
             t = time.time()
-            tgt_x = np.sin(f1*t)*0.15 + 0.4
-            tgt_y = np.sin(f2*t)*0.1 + 0.4
-            tgt_z = 0.0
+            # tgt_x = np.sin(f1*t)*0.15 + 0.4
+            # tgt_y = np.sin(f2*t)*0.1 + 0.4
+            # tgt_z = 0.0
+            tgt_x = np.sin(f1*t)*0.6
+            tgt_y = -0.4
+            tgt_z = 0.1 #np.cos(f2*t)*0.3 + 0.4
             pub_tgt_x.publish(tgt_x)
             pub_tgt_y.publish(tgt_y)
             pub_tgt_z.publish(tgt_z)

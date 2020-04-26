@@ -32,7 +32,7 @@ netft_data = ctx:createInputChannelWrench("netft_data")
 -- meas_ty = ctx:createInputChannelScalar("meas_ty")
 -- meas_tz = ctx:createInputChannelScalar("meas_tz")
 
-
+-- netft_data[1] is the same as coord_x(force(netft_data)))??
 -- Force constraints
 Constraint{
     context = ctx,
@@ -69,7 +69,7 @@ Constraint{
 Constraint{
     context = ctx,
     name    = "tx_control",
-    model   = coord_x(origin(robot_ee)), --ROLL .Want to rotate about x-axis. rot_x?
+    model   = rotate_x(frame(robot_ee)), --ROLL .Want to rotate about x-axis. rot_x?
     meas    = netft_data[4],--meas_tx, --measured torque
     target  = 0, --Tdes_ee, 
     priority= 2,
@@ -79,7 +79,7 @@ Constraint{
 Constraint{
     context = ctx,
     name    = "ty_control",
-    model   = coord_y(origin(robot_ee)), --Pitch. Want to rotate about y-axis. rox_y?
+    model   = rotate_y(frame(robot_ee)), --Pitch. Want to rotate about y-axis. rox_y?
     meas    = netft_data[5],--meas_ty, --measured torque
     target  = 0, --Tdes_ee, 
     priority= 2,
@@ -89,19 +89,19 @@ Constraint{
 Constraint{
     context = ctx,
     name    = "tz_control",
-    model   = coord_z(origin(robot_ee)), --Yaw .Want to rotate about z-axis. rot_z?
+    model   = rotate_z(frame(robot_ee)), --Yaw .Want to rotate about z-axis. rot_z?
     meas    = netft_data[6],--meas_tz, --measured torque
     target  = 0, --Tdes_ee, 
     priority= 2,
     K       = 0.001 --1/Damping constant
 }
 
-ctx:setOutputExpression("error_fx", meas_fx - 0)
-ctx:setOutputExpression("error_fy", meas_fy - 0)
-ctx:setOutputExpression("error_fz", meas_fz - 0)
-ctx:setOutputExpression("error_tx", meas_tx - 0)
-ctx:setOutputExpression("error_ty", meas_ty - 0)
-ctx:setOutputExpression("error_tz", meas_tz - 0)
+-- ctx:setOutputExpression("error_fx", meas_fx - 0)
+-- ctx:setOutputExpression("error_fy", meas_fy - 0)
+-- ctx:setOutputExpression("error_fz", meas_fz - 0)
+-- ctx:setOutputExpression("error_tx", meas_tx - 0)
+-- ctx:setOutputExpression("error_ty", meas_ty - 0)
+-- ctx:setOutputExpression("error_tz", meas_tz - 0)
 
 
 

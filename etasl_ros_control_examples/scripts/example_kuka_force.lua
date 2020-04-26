@@ -22,9 +22,7 @@ robot_joints = {
     "joint_a5",
     "joint_a6"
 }
--- meas_fx = ctx:createInputChannelScalar("msg.wrench.force.x")
--- meas_fy = ctx:createInputChannelScalar("msg.wrench.force.y")
--- meas_fz = ctx:createInputChannelScalar("msg.wrench.force.z")
+
 
 meas_fx = ctx:createInputChannelScalar("meas_fx")
 meas_fy = ctx:createInputChannelScalar("meas_fy")
