@@ -24,10 +24,12 @@ robot_joints = {
 }
 
 
-meas_fx = ctx:createInputChannelScalar("meas_fx")
-meas_fy = ctx:createInputChannelScalar("meas_fy")
-meas_fz = ctx:createInputChannelScalar("meas_fz")
-
+meas_fx = ctx:createInputChannelScalar("etasl_controller/meas_fx") --/etasl_controller/
+meas_fy = ctx:createInputChannelScalar("etasl_controller/meas_fy")
+meas_fz = ctx:createInputChannelScalar("etasl_controller/meas_fz")
+-- fx = constant(10)
+-- fy = constant(10)
+-- fz = constant(10)
 
 -- Force constraints
 Constraint{
@@ -45,7 +47,7 @@ Constraint{
     name    = "fy_control",
     model   = coord_y(origin(robot_ee)),
     meas    = meas_fy, --Fmeas_ee,
-    target  = 0, --Fdes_ee, 
+    target  = constant(0), --Fdes_ee, 
     priority= 2,
     K       = 0.001 --1/Damping constant
 }
@@ -55,7 +57,7 @@ Constraint{
     name    = "fz_control",
     model   = coord_z(origin(robot_ee)),
     meas    = meas_fz, --Fmeas_ee,
-    target  = 0, --Fdes_ee, 
+    target  = constant(0), --Fdes_ee, 
     priority= 2,
     K       = 0.001 --1/Damping constant
 }

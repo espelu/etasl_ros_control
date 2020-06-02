@@ -44,7 +44,7 @@ Constraint{
     name    = "fy_control",
     model   = coord_y(origin(robot_ee)),
     meas    = netft_data[2],--meas_fy, --Fmeas_ee,
-    target  = 0, --Fdes_ee, 
+    target  = constant(0), --Fdes_ee, 
     priority= 2,
     K       = 0.001 --1/Damping constant
 }
@@ -54,7 +54,7 @@ Constraint{
     name    = "fz_control",
     model   = coord_z(origin(robot_ee)),
     meas    = netft_data[3],--meas_fz, --Fmeas_ee,
-    target  = 0, --Fdes_ee, 
+    target  = constant(0), --Fdes_ee, 
     priority= 2,
     K       = 0.001 --1/Damping constant
 }
@@ -66,7 +66,7 @@ Constraint{
     name    = "tx_control",
     model   = rotate_x(frame(robot_ee)), --ROLL .Want to rotate about x-axis. rot_x?
     meas    = netft_data[4],--meas_tx, --measured torque
-    target  = 0, --Tdes_ee, 
+    target  = constant(0), --Tdes_ee, 
     priority= 2,
     K       = 0.001 --1/Damping constant
 }
@@ -76,7 +76,7 @@ Constraint{
     name    = "ty_control",
     model   = rotate_y(frame(robot_ee)), --Pitch. Want to rotate about y-axis. rox_y?
     meas    = netft_data[5],--meas_ty, --measured torque
-    target  = 0, --Tdes_ee, 
+    target  = constant(0), --Tdes_ee, 
     priority= 2,
     K       = 0.001 --1/Damping constant
 }
@@ -86,7 +86,7 @@ Constraint{
     name    = "tz_control",
     model   = rotate_z(frame(robot_ee)), --Yaw .Want to rotate about z-axis. rot_z?
     meas    = netft_data[6],--meas_tz, --measured torque
-    target  = 0, --Tdes_ee, 
+    target  = constant(0), --Tdes_ee, 
     priority= 2,
     K       = 0.001 --1/Damping constant
 }

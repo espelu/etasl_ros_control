@@ -14,24 +14,24 @@ etasl_controller:
     - joint_a4
     - joint_a5
     - joint_a6
-  input:
-    names:
-      # - "netft_data"
-      - "meas_tx"
-      - "meas_ty"
-      - "meas_tz"
-    types:
-      # - "Wrench"
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
-  output:
-    names:      
-      - "error_tx"
-      - "error_ty"
-      - "error_tz"
-    types:
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
+  # input:
+  #   names:
+  #     # - "netft_data"
+  #     - "meas_tx"
+  #     - "meas_ty"
+  #     - "meas_tz"
+  #   types:
+  #     # - "Wrench"
+  #     - "Scalar"
+  #     - "Scalar"
+  #     - "Scalar"
+  # output:
+  #   names:      
+  #     - "error_tx"
+  #     - "error_ty"
+  #     - "error_tz"
+  #   types:
+  #     - "Scalar"
+  #     - "Scalar"
+  #     - "Scalar"
   task_specification: "$(find etasl_ros_control_examples)/scripts/example_kuka_torque.lua"

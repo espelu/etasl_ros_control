@@ -65,7 +65,7 @@ if __name__ == "__main__":
             # tgt_z = 0.0
             tgt_x = np.sin(f1*t)*0.6
             tgt_y = -0.4
-            tgt_z = 0.1 #np.cos(f2*t)*0.3 + 0.4
+            tgt_z = 0.3 #np.cos(f2*t)*0.3 + 0.4
             pub_tgt_x.publish(tgt_x)
             pub_tgt_y.publish(tgt_y)
             pub_tgt_z.publish(tgt_z)

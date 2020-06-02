@@ -75,7 +75,7 @@ void EtaslController::starting(const ros::Time& /* time */)
   }
 
   DoubleMap converged_values_map;
-  if (etasl_->initialize(joint_position_map_, 10.0, 0.004, 1E-4, converged_values_map) < 0) //10.0, 0.004, 1E-4
+  if (etasl_->initialize(joint_position_map_, 10.0, 0.001, 1E-4, converged_values_map) < 0) //10.0, 0.004, 1E-4
   {
     ROS_ERROR_STREAM("EtaslController: Could not initialize the eTaSl solver");
   }
