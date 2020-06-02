@@ -40,7 +40,7 @@ By default we will assume you are building on the latest branch, we currently us
 Pull down the required repositories and build from within the root directory of your catkin workspace:
 ```bash
 wstool init src
-wstool merge -t src https://raw.githubusercontent.com/tingelst/etasl_ros_control/master/etasl_ros_control.rosinstall
+wstool merge -t src https://raw.githubusercontent.com/espelu/etasl_ros_control/force_torque/etasl_ros_control.rosinstall
 wstool update -t src
 rosdep install -y --from-paths src --ignore-src --rosdistro ${ROS_DISTRO}
 catkin_init_workspace src
@@ -64,10 +64,6 @@ There are three `launch` files available: One using the KUKA KR6 R900 sixx Agilu
 Launch the example using the KUKA Agilus:
 ```bash
 roslaunch etasl_ros_control_examples example_kuka_kr6r900sixx.launch
-```
-Launch the force control example using the KUKA Agilus:
-```bash
-roslaunch etasl_ros_control_examples example_kuka_kr6_ft_control.launch
 ```
 
 Launch the example using the UR10:
@@ -102,6 +98,14 @@ The multiple controllers can be used in a [SMACH](https://wiki.ros.org/smach) ex
 Launch the smach example:
 ```
 roslaunch etasl_ros_control_examples example_smach.launch
+```
+## Force and torque control
+Implementing admittance control in eTaSL with a force and torque sensor mounted in the "wrist" of the manipulator. Uses a ATI Gamma ip60 and http://wiki.ros.org/netft_utils. An example of datainputs from the sensor is recorded in a rosbag and uploaded in this branch.
+
+Launch the force control example using the KUKA Agilus:
+```bash
+rosbag play "the_name_of_the_rosbag"
+roslaunch etasl_ros_control_examples example_kuka_kr6_force_control.launch
 ```
 
 ## Acknowledgements
