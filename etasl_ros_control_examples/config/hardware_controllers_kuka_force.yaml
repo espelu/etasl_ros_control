@@ -16,13 +16,9 @@ etasl_controller_force:
     - joint_a6
   input:
     names:
-      - "meas_fx"
-      - "meas_fy"
-      - "meas_fz"   
+      - "calib_wrench"   
     types:
-      - "Scalar"
-      - "Scalar"
-      - "Scalar"
+      - "Wrench"
   output:
     names:      
       - "error_fx"
